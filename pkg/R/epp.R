@@ -1,6 +1,8 @@
 
 
 
+#
+
 setClass("epp", representation(
 	breedingDat     = "SpatialPointsBreeding", 
 	polygonsDat    	= "SpatialPolygonsDataFrame", 
@@ -19,31 +21,27 @@ setClass("epp", representation(
 
 epp <- function(breedingDat, polygonsDat = DirichletPolygons(breedingDat), eppPairs, rank = 3) { 
 
+  # example
+    set.seed(1310)
+    b = data.frame(id = 1:5, x = rnorm(5), y = rnorm(5), male = letters[1:5], female = LETTERS[1:5], stringsAsFactors=FALSE  )  
+    breedingDat = SpatialPointsBreeding(b )
+    polygonsDat = DirichletPolygons(breedingDat)
+    eppPairs = data.frame(male = sample(1:5, 3), female= sample(1:5, 3))
+    
+    plot(polygonsDat)
+    plot(breedingDat, add = T)
+    
 	#bricks
-		nb = poly2nb(polygonsDat)
+		nb  = poly2nb(polygonsDat)
 		hnb = higherNeighborsDataFrame(nb, maxlag = rank)
-		b = data.frame(k = breedingDat$k, id = breedingDat@id, male = breedingDat@male, female = breedingDat@female)
-		e = 
+		b   = data.frame(k = breedingDat@data, id = breedingDat@id, male = breedingDat@male, female = breedingDat@female)
+	
+  # build up epp set
+    d = merge(hnb, b, by = "id")
+    d = merge(d, b, by.x = 'id_neigh', by.y = 'id',  all.x = TRUE, sort = FALSE, suffixes= c("","_neigh") )
 		
-		# temp
-		new("epp", breedingDat = breedingDat, polygonsDat = polygonsDat , eppPairs = eppPairs, rank = rank, EPP = epp)
-		
-			# social pair
-	x = unique(eppData[eppData$epy == 0, c('id', 'male')])
-	e = merge(d, x, by = 'id',  all.x = TRUE, sort = FALSE)
+    
 	
-	x = unique(eppData[, c('id', 'female')])
-	e = merge(e, x, by = 'id',  all.x = TRUE, sort = FALSE)
-	
-	# neighbours
-	x = unique(eppData[eppData$epy == 0, c('id', 'male')])
-	e = merge(d, x, by.x = 'id_neigh',by.y = 'id',  all.x = TRUE, sort = FALSE, suffixes="_neigh")
-	
-	x = unique(eppData[, c('id', 'female')])
-	e = merge(e, x, by = 'id_neigh',by.y = 'id',  all.x = TRUE, sort = FALSE,suffixes="_neigh")
-	
-
-		
 		
 	}
 	
