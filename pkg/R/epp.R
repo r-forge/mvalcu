@@ -4,8 +4,9 @@
 setClass("epp", representation(
 	breedingDat     = "SpatialPointsBreeding", 
 	polygonsDat    	= "SpatialPolygonsDataFrame", 
-	eppDat         	= "data.frame", # TODO should exdend data.frame
-	rank 			= "numeric"
+	eppPairs      	= "data.frame", # TODO should extend data.frame
+	rank 			= "numeric", 
+	EPP				= "data.frame"
 	),
 	
 	validity = function(object)	{
@@ -16,35 +17,18 @@ setClass("epp", representation(
  )
 
 
-#spatial epp setting
-sepp <- function(breedingDat, polygonsDat, eppDat, rank = 3) { 
+epp <- function(breedingDat, polygonsDat = DirichletPolygons(breedingDat), eppPairs, rank = 3) { 
 
-	new("epp", breedingDat = breedingDat, polygonsDat = DirichletPolygons(breedingDat), eppDat = eppDat, rank = rank)
-
-	}
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-eppData <- function(eppdat) { 
-	#TODO
-	d = higherNeighborsDataFrame(nb, maxlag = n_neighborhoods)
-	nb = poly2nb(v)
-
-	# social pair
+	#bricks
+		nb = poly2nb(polygonsDat)
+		hnb = higherNeighborsDataFrame(nb, maxlag = rank)
+		b = data.frame(k = breedingDat$k, id = breedingDat@id, male = breedingDat@male, female = breedingDat@female)
+		e = 
+		
+		# temp
+		new("epp", breedingDat = breedingDat, polygonsDat = polygonsDat , eppPairs = eppPairs, rank = rank, EPP = epp)
+		
+			# social pair
 	x = unique(eppData[eppData$epy == 0, c('id', 'male')])
 	e = merge(d, x, by = 'id',  all.x = TRUE, sort = FALSE)
 	
@@ -59,7 +43,22 @@ eppData <- function(eppdat) {
 	e = merge(e, x, by = 'id_neigh',by.y = 'id',  all.x = TRUE, sort = FALSE,suffixes="_neigh")
 	
 
-}
+		
+		
+	}
+	
+	
+
+	
+	
+	
+	
+	
+
+
+
+
+
 	
 	
 	
