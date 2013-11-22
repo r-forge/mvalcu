@@ -2,7 +2,7 @@
  
 setClass("SpatialPointsBreeding", representation(
 	id    = "integer", 
-	male = "character", 
+	male  = "character", 
 	female = "character"
 	),
 	

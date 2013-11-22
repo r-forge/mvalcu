@@ -1,8 +1,4 @@
 
-
-
-#
-
 setClass("epp", representation(
 	breedingDat     = "SpatialPointsBreeding", 
 	polygonsDat    	= "SpatialPolygonsDataFrame", 
