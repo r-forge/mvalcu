@@ -1,11 +1,11 @@
 \name{epp}
 \alias{epp}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
-%%  ~~function to do ... ~~
+epp
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+epp
 }
 \usage{
 epp(breedingDat, polygonsDat = DirichletPolygons(breedingDat), eppPairs, rank = 3)
