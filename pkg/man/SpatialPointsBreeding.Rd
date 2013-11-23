@@ -1,28 +1,32 @@
-\name{epp}
-\alias{epp}
+\name{SpatialPointsBreeding}
+\alias{SpatialPointsBreeding}
 
 \title{
-epp
+Converts a data.frame to a SpatialPointsBreeding object
 }
+
 \description{
-epp
+%%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-epp(breedingDat, polygonsDat = DirichletPolygons(breedingDat), eppPairs, rank = 3)
+SpatialPointsBreeding(data, proj4string = CRS(as.character(NA)), coords = ~x + y, id = "id", breeding = ~male + female)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{breedingDat}{
-%%     ~~Describe \code{breedingDat} here~~
+  \item{data}{
+%%     ~~Describe \code{data} here~~
 }
-  \item{polygonsDat}{
-%%     ~~Describe \code{polygonsDat} here~~
+  \item{proj4string}{
+%%     ~~Describe \code{proj4string} here~~
 }
-  \item{eppPairs}{
-%%     ~~Describe \code{eppPairs} here~~
+  \item{coords}{
+%%     ~~Describe \code{coords} here~~
 }
-  \item{rank}{
-%%     ~~Describe \code{rank} here~~
+  \item{id}{
+%%     ~~Describe \code{id} here~~
+}
+  \item{breeding}{
+%%     ~~Describe \code{breeding} here~~
 }
 }
 \details{
@@ -51,21 +55,26 @@ epp(breedingDat, polygonsDat = DirichletPolygons(breedingDat), eppPairs, rank = 
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-
     set.seed(1310)
     b = data.frame(id = 1:3, x = rnorm(3), y = rnorm(3), 
       male = paste0("m",1:3), female =  paste0("f",1:3), xx = rnorm(3), stringsAsFactors=FALSE  )  
     breedingDat = SpatialPointsBreeding(b )
     polygonsDat = DirichletPolygons(breedingDat)
     eppPairs = data.frame(male = c("m1", "m2", "m1"), female=c("f3", "f1", "f2") )
-   
-   x = epp(breedingDat, polygonsDat, eppPairs, rank = 3)
+    
+    plot(polygonsDat)
+    plot(breedingDat, add = T)
 
-
-
+  }
 }
-
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ ~kwd1 }
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+
+
+
+
+
+
