@@ -52,15 +52,25 @@ epp(breedingDat, polygonsDat = DirichletPolygons(breedingDat), eppPairs, rank = 
 }
 \examples{
 
-    set.seed(1310)
-    b = data.frame(id = 1:3, x = rnorm(3), y = rnorm(3), 
-      male = paste0("m",1:3), female =  paste0("f",1:3), xx = rnorm(3), stringsAsFactors=FALSE  )  
-    breedingDat = SpatialPointsBreeding(b )
-    polygonsDat = DirichletPolygons(breedingDat)
-    eppPairs = data.frame(male = c("m1", "m2", "m1"), female=c("f3", "f1", "f2") )
-   
-   x = epp(breedingDat, polygonsDat, eppPairs, rank = 3)
+  set.seed(1310)
+  b = data.frame(id = 1:3, x = rnorm(3), y = rnorm(3), 
+    male = paste0("m",1:3), female =  paste0("f",1:3), xx = rnorm(3), stringsAsFactors=FALSE  )  
+  breedingDat = SpatialPointsBreeding(b )
+  polygonsDat = DirichletPolygons(breedingDat)
+  eppPairs = data.frame(male = c("m1", "m2", "m1"), female=c("f3", "f1", "f2") )
+  x = epp(breedingDat, polygonsDat, eppPairs, rank = 3)
+  plot(x)
 
+  # 
+  n = 50
+  b = data.frame(id = 1:n, x = rnorm(n), y = rnorm(n), 
+    male = paste0("m",1:n), female =  paste0("f",1:n), xx = rnorm(n), stringsAsFactors=FALSE  )  
+  breedingDat = SpatialPointsBreeding(b )
+  polygonsDat = DirichletPolygons(breedingDat)
+  eppPairs = data.frame(male = sample(b$male, round(n/10) ), female=sample(b$female, round(n/10) ) )
+  
+  x = epp(breedingDat, polygonsDat, eppPairs, rank = 10)
+  plot(x)
 
 
 }

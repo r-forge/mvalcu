@@ -8,11 +8,22 @@ setClass("epp", representation(
 	),
 	
 	validity = function(object)	{
-		if (object@rank < 1)
-			stop("rank must be greater than 0.")	
-	if(! identical(polygonsDat@data[, 1], breedingDat@id))
-    stop( dQuote("polygonsDat@data[, 1]"), " does not match ",  dQuote("breedingDat@id") )
-      
+  	if (object@rank < 1)
+  			stop("rank must be greater than 0.")	
+  
+    if(! identical(polygonsDat@data[, 1], breedingDat@id))
+      stop( dQuote("polygonsDat@data[, 1]"), " does not match ",  dQuote("breedingDat@id") )
+   
+    if(ncol(EPP)!=2) 
+      stop(dQuote(EPP), "data.frame should have only two columns.")
+   
+    if( length(intersect(breedingDat@male, EPP[, 1])) < 1 )
+      stop("no EP males are to be found in breedingDat")
+  	
+    if( length(intersect(breedingDat@female, EPP[, 2])) < 1 )
+  	  stop("no EP males are to be found in breedingDat")
+  	
+    
 		return(TRUE)
 		}
  )
@@ -52,9 +63,26 @@ epp <- function(breedingDat, polygonsDat = DirichletPolygons(breedingDat), eppPa
     
     
     
+    
 	}
 
+plot.epp <- function(x, ...) {
+ # map
+  par(mfrow = c(1,2), ...)
+  plot(x@polygonsDat, border = "grey")
+  plot(x@breedingDat, add = TRUE)
+  epp = subset(x@EPP, epp == 1,select= c("id_neigh" , "id") )
+  apply(epp, 1, function(e) points(x@breedingDat[x@breedingDat@id%in%e, ], type = "l", col = 2))
+ 
+ # barplot  
+  plot(xtabs(subset(x@EPP, epp == 1,select= "rank" )), ylab = "Freq")
+  
+  
+  
+}
 
+setMethod("plot", signature(x = "epp", y = "missing"),
+          function(x,y,...) plot.epp(x,...))
 	
 	
 
