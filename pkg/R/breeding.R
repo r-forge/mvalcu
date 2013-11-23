@@ -19,6 +19,7 @@ setClass("SpatialPointsBreeding", representation(
 		return(TRUE)
 		}
  )
+#=====================================================================================================#
 
 
 SpatialPointsBreeding <- function(data, proj4string = CRS(as.character(NA)), coords = ~ x + y, id = 'id', breeding = ~ male + female) {
@@ -43,21 +44,21 @@ SpatialPointsBreeding <- function(data, proj4string = CRS(as.character(NA)), coo
 }
 
 
+#=====================================================================================================#
 
-plot.SpatialPointsBreeding <- function(x, pch = 20, axes = FALSE, add = FALSE, 
-	xlim = NULL, ylim = NULL, ..., cex = 1, col = "grey", lwd = 1, bg = 1, pair.cex = .6) {
-	if (! add)
-		plot(as(x, "Spatial"), axes = axes, xlim = xlim, ylim = ylim, ...)
-	cc = coordinates(x)
-	points(cc[,1], cc[,2], pch = pch, cex = cex, col = col, lwd = lwd, bg = bg)
-	text(cc[,1], cc[,2], x@id, pos = 4, cex = cex)
-	text(cc[,1], cc[,2], x@female, pos = 1,  cex =  pair.cex)
-	text(cc[,1], cc[,2], x@male, pos = 3,  cex = pair.cex)
-	
-}
 
 setMethod("plot", signature(x = "SpatialPointsBreeding", y = "missing"),
-	function(x,y,...) plot.SpatialPointsBreeding(x,...))
+          function(x, pch = 20, axes = FALSE, add = FALSE, 
+                   xlim = NULL, ylim = NULL, ..., cex = 1, col = "grey", lwd = 1, bg = 1, pair.cex = .6) {
+            if (! add)
+              plot(as(x, "Spatial"), axes = axes, xlim = xlim, ylim = ylim, ...)
+            cc = coordinates(x)
+            points(cc[,1], cc[,2], pch = pch, cex = cex, col = col, lwd = lwd, bg = bg)
+            text(cc[,1], cc[,2], x@id, pos = 4, cex = cex)
+            text(cc[,1], cc[,2], x@female, pos = 1,  cex =  pair.cex)
+            text(cc[,1], cc[,2], x@male, pos = 3,  cex = pair.cex)
+            
+          })
 
 
 #=====================================================================================================#
@@ -116,7 +117,6 @@ setMethod("DirichletPolygons",
 	)
 
 
-	
 	
 #=====================================================================================================#
 

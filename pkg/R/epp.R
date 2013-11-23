@@ -27,6 +27,7 @@ setClass("epp", representation(
 		return(TRUE)
 		}
  )
+#=====================================================================================================#
 
 
 epp <- function(breedingDat, polygonsDat = DirichletPolygons(breedingDat), eppPairs, rank = 3) { 
@@ -59,32 +60,34 @@ epp <- function(breedingDat, polygonsDat = DirichletPolygons(breedingDat), eppPa
 
     # new
 		new("epp", breedingDat = breedingDat, polygonsDat = polygonsDat, eppPairs = eppPairs, rank = rank, EPP = d)
-    
-    
-    
-    
-    
 	}
 
-plot.epp <- function(x, ...) {
- # map
-  par(mfrow = c(1,2), ...)
-  plot(x@polygonsDat, border = "grey")
-  plot(x@breedingDat, add = TRUE)
-  epp = subset(x@EPP, epp == 1,select= c("id_neigh" , "id") )
-  apply(epp, 1, function(e) points(x@breedingDat[x@breedingDat@id%in%e, ], type = "l", col = 2))
- 
- # barplot  
-  plot(xtabs(subset(x@EPP, epp == 1,select= "rank" )), ylab = "Freq")
-  
-  
-  
-}
+#=====================================================================================================#
+
 
 setMethod("plot", signature(x = "epp", y = "missing"),
-          function(x,y,...) plot.epp(x,...))
-	
-	
+          function(x,y,...) {
+            plot(x@polygonsDat, border = "grey")
+            plot(x@breedingDat, add = TRUE)
+            epp = subset(x@EPP, epp == 1,select= c("id_neigh" , "id") )
+            apply(epp, 1, function(e) points(x@breedingDat[x@breedingDat@id%in%e, ], type = "l", col = 2))
+                        
+          })
+
+#=====================================================================================================#
+
+  if (!isGeneric("barplot")) {
+    setGeneric("barplot", function(height,...)
+      standardGeneric("barplot"))
+   }  
+    
+
+setMethod("barplot", "epp",
+          function(height,...) {
+            plot(xtabs(subset(x@EPP, epp == 1,select= "rank" )), ...)
+            
+            
+          })
 
 	
 	

@@ -71,6 +71,7 @@ epp(breedingDat, polygonsDat = DirichletPolygons(breedingDat), eppPairs, rank = 
   
   x = epp(breedingDat, polygonsDat, eppPairs, rank = 10)
   plot(x)
+  barplot(x)
 
 
 }
